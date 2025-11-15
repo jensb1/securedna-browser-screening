@@ -50,6 +50,44 @@ npm run build
 npm run preview
 ```
 
+## Deployment
+
+### Option 1: Netlify (Easiest)
+
+1. Build the application: `npm run build`
+2. Drag the `dist/` folder to https://app.netlify.com/drop
+3. Done! Your site is live with HTTPS
+
+### Option 2: Vercel
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+### Option 3: GitHub Pages
+
+```bash
+# Make script executable (first time only)
+chmod +x deploy-gh-pages.sh
+
+# Deploy
+./deploy-gh-pages.sh
+```
+
+Your site will be available at `https://<username>.github.io/<repo-name>/`
+
+### Option 4: Any Static Host
+
+After running `npm run build`, deploy the `dist/` folder to any static hosting service:
+- AWS S3 + CloudFront
+- Cloudflare Pages
+- Firebase Hosting
+- Surge.sh
+
 ## Usage
 
 1. **Load Credentials**
