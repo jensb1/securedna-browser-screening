@@ -6,7 +6,8 @@
   "description": "Web-based UI for SecureDNA screening using WASM",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
+    "build:check": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
