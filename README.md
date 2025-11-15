@@ -104,9 +104,32 @@ securedna-screening-ui/
 
 ## WASM Module
 
-The screening logic runs entirely in the browser using a WebAssembly module. Place your WASM files in `src/wasm/`:
+The screening logic runs entirely in the browser using a WebAssembly module. The pre-compiled WASM files are located in `src/wasm/`:
 - `screening_wasm.js` - JavaScript bindings
 - `screening_wasm_bg.wasm` - WebAssembly binary
+- `screening_wasm.d.ts` - TypeScript type definitions
+
+### Updating WASM from SecureDNA Repository
+
+When the Rust code in the main SecureDNA repository is updated, you can rebuild and update the WASM files:
+
+```bash
+# Update WASM from default location (../securedna)
+./update-wasm.sh
+
+# Or specify custom path to SecureDNA repo
+./update-wasm.sh /path/to/securedna
+```
+
+**Prerequisites for building WASM:**
+- Rust toolchain installed
+- `wasm-pack` installed: `cargo install wasm-pack`
+- Access to the SecureDNA repository
+
+The script will:
+1. Build the WASM module from the SecureDNA repo
+2. Copy the compiled files to `src/wasm/`
+3. Show file sizes for verification
 
 ## Browser Storage
 
@@ -118,6 +141,23 @@ When "Save in Browser" is enabled, the following are stored in localStorage:
 - `securedna_hdb` - Configured HDB server
 
 **Note:** File inputs cannot be pre-populated for security reasons, but the data is loaded into memory and ready to use.
+
+## Security
+
+### Credentials
+
+**This repository does NOT include any tokens, keypairs, or credentials.** You must provide your own:
+- `.st` token file
+- `.priv` keypair file
+- Passphrase
+
+The `.gitignore` is configured to prevent accidental commits of credential files:
+- `*.st`, `*.priv`, `*.pem`, `*.key`
+- `credentials/`, `secrets/` directories
+
+### Privacy
+
+All DNA sequence screening happens **entirely in your browser** via WebAssembly. No plaintext sequences are sent to any server. The application only communicates with SecureDNA keyservers and HDB servers using encrypted, privacy-preserving protocols.
 
 ## License
 

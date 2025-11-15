@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Credentials (never commit these!)
+*.st
+*.priv
+*.pem
+*.key
+credentials/
+secrets/
