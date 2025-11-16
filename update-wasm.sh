@@ -5,6 +5,7 @@ set -e
 # Usage: ./update-wasm.sh [path-to-securedna-repo]
 
 SECUREDNA_REPO="${1:-../securedna}"
+SECUREDNA_GIT_URL="https://github.com/SecureDNA/SecureDNA"
 WASM_CRATE="$SECUREDNA_REPO/crates/wasm_bindings/screening"
 TARGET_DIR="./src/wasm"
 
@@ -13,11 +14,21 @@ echo "   SecureDNA repo: $SECUREDNA_REPO"
 echo "   WASM crate: $WASM_CRATE"
 echo ""
 
-# Check if SecureDNA repo exists
+# Check if SecureDNA repo exists, if not clone it
 if [ ! -d "$SECUREDNA_REPO" ]; then
-    echo "❌ Error: SecureDNA repository not found at $SECUREDNA_REPO"
-    echo "   Usage: ./update-wasm.sh [path-to-securedna-repo]"
-    exit 1
+    echo "📥 SecureDNA repository not found at $SECUREDNA_REPO"
+    echo "   Cloning from $SECUREDNA_GIT_URL..."
+    git clone "$SECUREDNA_GIT_URL" "$SECUREDNA_REPO"
+    echo "✅ Repository cloned successfully"
+    echo ""
+else
+    echo "📂 Using existing repository at $SECUREDNA_REPO"
+    # Update the repository if it already exists
+    echo "🔄 Pulling latest changes..."
+    cd "$SECUREDNA_REPO"
+    git pull
+    cd - > /dev/null
+    echo ""
 fi
 
 # Check if the screening crate exists
